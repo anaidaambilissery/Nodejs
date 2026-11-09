@@ -47,6 +47,33 @@ app.delete("/api/users/:id", (req, res) => {
   });
 });
 
+
+// PUT - Replace an existing user
+app.put("/api/users/:id", (req, res) => {
+  const userId = Number(req.params.id);
+
+  const userIndex = users.findIndex(
+    (user) => user.id === userId
+  );
+
+  if (userIndex === -1) {
+    return res.status(404).json({
+      message: "User not found"
+    });
+  }
+
+  users[userIndex] = {
+    id: userId,
+    ...req.body
+  };
+
+  res.json({
+    message: "User updated successfully",
+    user: users[userIndex]
+  });
+});
+
+
 // Start server
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
