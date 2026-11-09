@@ -74,6 +74,29 @@ app.put("/api/users/:id", (req, res) => {
 });
 
 
+// PATCH - Update specific user fields
+app.patch("/api/users/:id", (req, res) => {
+  const userId = Number(req.params.id);
+
+  const user = users.find(
+    (user) => user.id === userId
+  );
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found"
+    });
+  }
+
+  Object.assign(user, req.body);
+
+  res.json({
+    message: "User partially updated successfully",
+    user
+  });
+});
+
+
 // Start server
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
