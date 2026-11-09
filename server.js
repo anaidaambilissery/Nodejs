@@ -15,16 +15,25 @@ const logger = (req, res, next) => {
 app.use(logger);
 
 // Routes
-app.get('/', (req, res) => {
-    res.send("Hello world");
+let users = [
+  { id: 1, name: "John" },
+  { id: 2, name: "David" }
+];
+
+// GET - Read users
+app.get("/api/users", (req, res) => {
+  res.json(users);
 });
 
-app.get('/api/user', (req, res) => {
-    res.json({
-        id: 1,
-        name: "John",
-        role: "Developer"
-    });
+// POST - Create user
+app.post("/api/users", (req, res) => {
+  const newUser = req.body;
+  users.push(newUser);
+
+  res.status(201).json({
+    message: "User created successfully",
+    users
+  });
 });
 
 // Start server
