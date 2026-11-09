@@ -35,6 +35,17 @@ app.post("/api/users", (req, res) => {
     users
   });
 });
+// DELETE - Remove a user
+app.delete("/api/users/:id", (req, res) => {
+  const userId = Number(req.params.id);
+
+  users = users.filter((user) => user.id !== userId);
+
+  res.json({
+    message: "User deleted successfully",
+    users
+  });
+});
 
 // Start server
 app.listen(5000, () => {
